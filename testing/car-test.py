@@ -1,23 +1,45 @@
 import RPi.GPIO as io
 import time
 
-DELAY = 2
 
+# Define pinouts
+DRIVE1 = 17
+DRIVE2 = 18
+STEER1 = 23
+STEER2 = 24
+
+# Use pin names not pin numbers
 io.setmode(io.BCM)
 
-io.setup(18, io.OUT)
-io.setup(17, io.OUT)
+# Setup pin types
+io.setup(DRIVE1, io.OUT)
+io.setup(DRIVE2, io.OUT)
+io.setup(STEER1, io.OUT)
+io.setup(STEER2, io.OUT)
 
 while True:
-	io.output(17, False)
-	io.output(18, False)
+	io.output(DRIVE1, False)
+	io.output(DRIVE2, False)
 	time.sleep(1)
-	io.output(17, True)
-	io.output(18, False)
-	time.sleep(DELAY)
-	io.output(17, True)
-	io.output(18, True)
+	io.output(DRIVE1, True)
+	io.output(DRIVE2, False)
 	time.sleep(1)
-	io.output(17, False)
-	io.output(18, True)
-	time.sleep(DELAY)
+	io.output(DRIVE1, False)
+	io.output(DRIVE2, True)
+	time.sleep(1)
+	io.output(DRIVE1, True)
+	io.output(DRIVE2, True)
+	time.sleep(1)
+
+	io.output(STEER1, False)
+	io.output(STEER2, False)
+	time.sleep(1)
+	io.output(STEER1, True)
+	io.output(STEER2, False)
+	time.sleep(1)
+	io.output(STEER1, False)
+	io.output(STEER2, True)
+	time.sleep(1)
+	io.output(STEER1, True)
+	io.output(STEER2, True)
+	time.sleep(1)
