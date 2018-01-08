@@ -59,3 +59,10 @@ io.output(DRIVE2, True)
 io.output(STEER1, True)
 io.output(STEER2, False)
 time.sleep(1)
+
+# Stop
+io.output(DRIVE1, False)
+io.output(DRIVE2, False)
+io.output(STEER1, False)
+io.output(STEER2, False)
+time.sleep(1)
