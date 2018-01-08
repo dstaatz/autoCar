@@ -1,6 +1,7 @@
 import RPi.GPIO as io
 import time
 
+DELAY = 2
 
 # Define pinouts
 DRIVE1 = 17
@@ -23,46 +24,45 @@ io.output(DRIVE1, True)
 io.output(DRIVE2, False)
 io.output(STEER1, False)
 io.output(STEER2, True)
-time.sleep(1)
+time.sleep(DELAY)
 
 # Test forward
 io.output(DRIVE1, True)
 io.output(DRIVE2, False)
 io.output(STEER1, False)
 io.output(STEER2, False)
-time.sleep(1)
+time.sleep(DELAY)
 
 # Test forward-right
 io.output(DRIVE1, True)
 io.output(DRIVE2, False)
 io.output(STEER1, True)
 io.output(STEER2, False)
-time.sleep(1)
+time.sleep(DELAY)
 
 # Test back-left
 io.output(DRIVE1, False)
 io.output(DRIVE2, True)
 io.output(STEER1, False)
 io.output(STEER2, True)
-time.sleep(1)
+time.sleep(DELAY)
 
 # Test back
 io.output(DRIVE1, False)
 io.output(DRIVE2, True)
 io.output(STEER1, False)
 io.output(STEER2, False)
-time.sleep(1)
+time.sleep(DELAY)
 
 # Test back-right
 io.output(DRIVE1, False)
 io.output(DRIVE2, True)
 io.output(STEER1, True)
 io.output(STEER2, False)
-time.sleep(1)
+time.sleep(DELAY)
 
 # Stop
 io.output(DRIVE1, False)
 io.output(DRIVE2, False)
 io.output(STEER1, False)
 io.output(STEER2, False)
-time.sleep(1)
