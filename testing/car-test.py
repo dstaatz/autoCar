@@ -1,7 +1,8 @@
 import RPi.GPIO as io
 import time
 
-DELAY = 2
+io.setwarnings(False)
+DELAY = 1
 
 # Define pinouts
 DRIVE1 = 17
