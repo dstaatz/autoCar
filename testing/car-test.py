@@ -20,6 +20,7 @@ io.setup(STEER1, io.OUT)
 io.setup(STEER2, io.OUT)
 
 ## Test all directions
+
 # Test forward-left
 io.output(DRIVE1, True)
 io.output(DRIVE2, False)
