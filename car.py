@@ -35,9 +35,9 @@ class Car:
             io.setup(self.S1, io.OUT)
             io.setup(self.S2, io.OUT)
 
-      def update(self, x, y):
+      def update(self, data):
 
-            pass
+            print(data)
 
       def forward_left(self):
 

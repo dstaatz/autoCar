@@ -7,6 +7,7 @@ import asyncio
 import pickle
 import logging
 import websockets
+from car import *
 
 p = 1
 
@@ -32,6 +33,9 @@ class Server(object):
         self._active_connections = set()
         self.ip = ip
         self.port = port
+
+        # setup robot
+        self.robot = Car(reverse_d=True, reverse_s=True)
 
     async def start_server(self):
         '''
@@ -65,7 +69,9 @@ class Server(object):
         self._active_connections.remove(ws)
 
     async def handle_msg(self, msg):
-        logging.info(pickle.loads(msg))
+        data = pickle.loads(msg)
+        # logging.info(data)
+        self.robot.update(data)
 
     async def send(self, msg):
         logging.info("Sending a messgage")
