@@ -23,8 +23,8 @@ class Car:
             self.S2 = S2
 
             # Reverse Setting
-            self.reverse_d = reverse_s
-            self.reverse_s = reverse_y
+            self.reverse_d = reverse_d
+            self.reverse_s = reverse_s
 
             # Use pin names not pin numbers
             io.setmode(io.BCM)
@@ -73,7 +73,8 @@ class Car:
             io.output(self.D2, 1 ^ self.reverse_d)
             io.output(self.S1, 0 ^ self.reverse_s)
             io.output(self.S2, 0 ^ self.reverse_s)
-      def forward_left(self):
+      
+      def back_right(self):
             
             io.output(self.D1, 0 ^ self.reverse_d)
             io.output(self.D2, 1 ^ self.reverse_d)
