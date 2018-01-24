@@ -8,32 +8,32 @@ io.setwarnings(False)
 
 class Car:
 
-    # Define defaut pinouts
-    D1_DEFAULT = 17
-    D2_DEFAULT = 18
-    S1_DEFAULT = 23
-    S2_DEFAULT = 24
+      # Define defaut pinouts
+      D1_DEFAULT = 17
+      D2_DEFAULT = 18
+      S1_DEFAULT = 23
+      S2_DEFAULT = 24
 
-    def __init__(self, D1=D1_DEFAULT, D2=D2_DEFAULT, S1=S1_DEFAULT, S2=S2_DEFAULT, reverse_d=False, reverse_s=False):
+      def __init__(self, D1=D1_DEFAULT, D2=D2_DEFAULT, S1=S1_DEFAULT, S2=S2_DEFAULT, reverse_d=False, reverse_s=False):
 
-        # Pin number settings
-        self.D1 = D1
-        self.D2 = D2
-        self.S1 = S1
-        self.S2 = S2
+            # Pin number settings
+            self.D1 = D1
+            self.D2 = D2
+            self.S1 = S1
+            self.S2 = S2
 
-        # Reverse Setting
-        self.reverse_d = reverse_s
-        self.reverse_s = reverse_y
+            # Reverse Setting
+            self.reverse_d = reverse_s
+            self.reverse_s = reverse_y
 
-        # Use pin names not pin numbers
-        io.setmode(io.BCM)
+            # Use pin names not pin numbers
+            io.setmode(io.BCM)
 
-        # Setup pin types
-        io.setup(self.D1, io.OUT)
-        io.setup(self.D2, io.OUT)
-        io.setup(self.S1, io.OUT)
-        io.setup(self.S2, io.OUT)
+            # Setup pin types
+            io.setup(self.D1, io.OUT)
+            io.setup(self.D2, io.OUT)
+            io.setup(self.S1, io.OUT)
+            io.setup(self.S2, io.OUT)
 
       def update(self, x, y):
 
