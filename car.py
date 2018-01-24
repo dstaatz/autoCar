@@ -35,55 +35,54 @@ class Car:
         io.setup(self.S1, io.OUT)
         io.setup(self.S2, io.OUT)
 
-    def update(self, x, y):
+      def update(self, x, y):
 
-        pass
+            pass
 
-  def forward_left(self):
+      def forward_left(self):
 
-        io.output(self.D1, 1 ^ self.reverse_d)
-        io.output(self.D2, 0 ^ self.reverse_d)
-        io.output(self.S1, 0 ^ self.reverse_s)
-        io.output(self.S2, 1 ^ self.reverse_s)
+            io.output(self.D1, 1 ^ self.reverse_d)
+            io.output(self.D2, 0 ^ self.reverse_d)
+            io.output(self.S1, 0 ^ self.reverse_s)
+            io.output(self.S2, 1 ^ self.reverse_s)
 
-  def forward(self):
+      def forward(self):
 
-        io.output(self.D1, 1 ^ self.reverse_d)
-        io.output(self.D2, 0 ^ self.reverse_d)
-        io.output(self.S1, 0 ^ self.reverse_s)
-        io.output(self.S2, 0 ^ self.reverse_s)
+            io.output(self.D1, 1 ^ self.reverse_d)
+            io.output(self.D2, 0 ^ self.reverse_d)
+            io.output(self.S1, 0 ^ self.reverse_s)
+            io.output(self.S2, 0 ^ self.reverse_s)
 
-  def forward_right(self):
+      def forward_right(self):
 
-        io.output(self.D1, 1 ^ self.reverse_d)
-        io.output(self.D2, 0 ^ self.reverse_d)
-        io.output(self.S1, 1 ^ self.reverse_s)
-        io.output(self.S2, 0 ^ self.reverse_s)
+            io.output(self.D1, 1 ^ self.reverse_d)
+            io.output(self.D2, 0 ^ self.reverse_d)
+            io.output(self.S1, 1 ^ self.reverse_s)
+            io.output(self.S2, 0 ^ self.reverse_s)
 
-  def back_left(self):
+      def back_left(self):
 
-        io.output(self.D1, 0 ^ self.reverse_d)
-        io.output(self.D2, 1 ^ self.reverse_d)
-        io.output(self.S1, 0 ^ self.reverse_s)
-        io.output(self.S2, 1 ^ self.reverse_s)
+            io.output(self.D1, 0 ^ self.reverse_d)
+            io.output(self.D2, 1 ^ self.reverse_d)
+            io.output(self.S1, 0 ^ self.reverse_s)
+            io.output(self.S2, 1 ^ self.reverse_s)
 
-  def back(self):
+      def back(self):
 
-        io.output(self.D1, 0 ^ self.reverse_d)
-        io.output(self.D2, 1 ^ self.reverse_d)
-        io.output(self.S1, 0 ^ self.reverse_s)
-        io.output(self.S2, 0 ^ self.reverse_s)
+            io.output(self.D1, 0 ^ self.reverse_d)
+            io.output(self.D2, 1 ^ self.reverse_d)
+            io.output(self.S1, 0 ^ self.reverse_s)
+            io.output(self.S2, 0 ^ self.reverse_s)
+      def forward_left(self):
+            
+            io.output(self.D1, 0 ^ self.reverse_d)
+            io.output(self.D2, 1 ^ self.reverse_d)
+            io.output(self.S1, 1 ^ self.reverse_s)
+            io.output(self.S2, 0 ^ self.reverse_s)
 
-  def forward_left(self):
+      def stop(self):
 
-        io.output(self.D1, 0 ^ self.reverse_d)
-        io.output(self.D2, 1 ^ self.reverse_d)
-        io.output(self.S1, 1 ^ self.reverse_s)
-        io.output(self.S2, 0 ^ self.reverse_s)
-
-def stop(self):
-
-        io.output(self.D1, 0 ^ self.reverse_d)
-        io.output(self.D2, 0 ^ self.reverse_d)
-        io.output(self.S1, 0 ^ self.reverse_s)
-        io.output(self.S2, 0 ^ self.reverse_s)
+            io.output(self.D1, 0 ^ self.reverse_d)
+            io.output(self.D2, 0 ^ self.reverse_d)
+            io.output(self.S1, 0 ^ self.reverse_s)
+            io.output(self.S2, 0 ^ self.reverse_s)
