@@ -4,7 +4,7 @@
 '''
 
 # Server Setings
-SERVER_IP = '127.0.0.1'
+SERVER_IP = '10.132.66.254'
 SERVER_PORT = 8055
 
 # Drive Motor settings
