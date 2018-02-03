@@ -35,16 +35,9 @@ class Car(object):
         pass
     
     async def update(self, data):
-        
-        drive_task = asyncio.ensure_future(self.drive_motor.update(data))
-        steer_task = asyncio.ensure_future(self.steer_motor.update(data))
 
         # Wait for all tasks to be completed
-        await asyncio.wait([
-                drive_task,
-                steer_task,
-            ],
-            return_when=asyncio.ALL_COMPLETED
-        )
+        await asyncio.wait_for(self.drive_motor.update(data), 1)
+        await asyncio.wait_for(self.steer_motor.update(data), 1)
 
         

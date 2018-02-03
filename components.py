@@ -98,8 +98,9 @@ class DCMotorComponent(MotorComponent):
     
     async def update(self, data):
         # Update output pins
-        await asyncio.wait_for(io.output(self.p1, data[self.high_button] ^ self.reverse), 1)
-        await asyncio.wait_for(io.output(self.p2, data[self.low_button] ^ self.reverse), 1)
+        io.output(self.p1, data[self.high_button] ^ self.reverse)
+        await asyncio.sleep(0)
+        io.output(self.p2, data[self.low_button] ^ self.reverse)
 
 
 class PWMMotorComponent(MotorComponent):
