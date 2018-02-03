@@ -92,7 +92,7 @@ class DCMotorComponent(MotorComponent):
 
     def __init__(self, p1, p2, high_button, low_button, reverse=False):
 
-        super().__init__(self, p1, p2, reverse=reverse)
+        super().__init__(p1, p2, reverse=reverse)
         self.high_button = high_button
         self.low_button = low_button
     
@@ -106,7 +106,7 @@ class PWMMotorComponent(MotorComponent):
 
     def __init__(self, p1, p2, pwm_pin, axis_button, reverse=False):
 
-        super().__init__(self, p1, p2, reverse=reverse)
+        super().__init__(p1, p2, reverse=reverse)
         
         self.axis_button = axis_button
 
