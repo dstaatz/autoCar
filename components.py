@@ -75,14 +75,14 @@ class MotorComponent(Component):
         self.reverse = reverse
         
         # Setup output pins
-        io.setup(p1, io.OUT)
-        io.setup(p2, io.OUT)
+        io.setup(self.p1, io.OUT)
+        io.setup(self.p2, io.OUT)
         self.stop()
 
     def stop(self):
         # Turn off all pins
-        io.output(p1, False)
-        io.output(p2, False)
+        io.output(self.p1, False)
+        io.output(self.p2, False)
 
     def update(self, data):
         pass
