@@ -41,7 +41,7 @@ class Car(object):
                 self.drive_motor.update(data),
                 self.steer_motor.update(data),
             ],
-            return_when=asnycio.ALL_COMPLETED
+            return_when=asyncio.ALL_COMPLETED
         )
 
         
