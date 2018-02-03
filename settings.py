@@ -10,8 +10,8 @@ SERVER_PORT = 8055
 # Drive Motor settings
 DRIVE_MOTOR_P1 = 17
 DRIVE_MOTOR_P2 = 18
-DRIVE_MOTOR_HIGH = 'up'
-DRIVE_MOTOR_LOW = 'down'
+DRIVE_MOTOR_HIGH = 'r_trigger'
+DRIVE_MOTOR_LOW = 'l_trigger'
 DRIVE_MOTOR_REVERSE = False
 
 # Steering Motor settings
