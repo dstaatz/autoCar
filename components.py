@@ -3,6 +3,8 @@
     Define components and how they should work for the bot
 '''
 
+import asyncio
+
 import RPi.GPIO as io
 
 io.setmode(io.BCM)
