@@ -3,8 +3,10 @@
     Define components and how they should work for the bot
 '''
 
-from RPi.GPIO as io
+import RPi.GPIO as io
 
+io.setmode(io.BCM)
+io.setwarnings(False)
 
 class Component(object):
 
@@ -34,14 +36,14 @@ class LEDComponent(Component):
         # Turn off all pins
         io.output(self.pin, False)
 
-    def update(self, data):
+    async def update(self, data):
         # Update the state of the LED
         if self._state == 0:
             if data[self.button]:
                 io.output(self.pin, True)
                 self._state = 3
         elif self._state == 1:
-            if !data[self.button]:
+            if not data[self.button]:
                 io.output(self.pin, False)
                 self._state = 0
         elif self._state == 2:
@@ -49,7 +51,7 @@ class LEDComponent(Component):
                 io.output(self.pin, False)
                 self._state = 1
         elif self._state == 3:
-            if !data[self.button]:
+            if not data[self.button]:
                 io.output(self.pin, True)
                 self._state = 2
         
@@ -96,8 +98,8 @@ class DCMotorComponent(MotorComponent):
     
     def update(self, data):
         # Update output pins
-        io.output(p1, data[self.high_button] ^ self.reverse)
-        io.output(p2, data[self.low_button] ^ self.reverse)
+        io.output(self.p1, data[self.high_button] ^ self.reverse)
+        io.output(self.p2, data[self.low_button] ^ self.reverse)
 
 
 class PWMMotorComponent(MotorComponent):

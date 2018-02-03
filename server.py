@@ -71,7 +71,7 @@ class Server(object):
         data = pickle.loads(msg)
         logging.info(data)
         if self.robot:
-            self.robot.update(data)
+            await self.robot.update(data)
 
     def stop(self):
         # Stop the robot

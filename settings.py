@@ -22,6 +22,6 @@ STEER_MOTOR_LOW = 'left'
 STEER_MOTOR_REVERSE = False
 
 # LED 0 settings
-LED_BUTTON = None
-LED_PIN = None
+LED_BUTTON = 'a'
+LED_PIN = 21
 

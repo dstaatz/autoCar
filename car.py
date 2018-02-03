@@ -1,5 +1,8 @@
 ''' Describes the car and how to control it '''
 
+# General imports
+import asyncio
+
 from components import *
 from settings import *
 
@@ -38,4 +41,9 @@ class Car(object):
         pass
     
     async def update(self, data):
-        pass
+        
+        # await self.drive_motor.update(data)
+        # await self.steer_motor.update(data)
+        await asyncio.wait_for(self.led.update(data), 2)
+
+        
