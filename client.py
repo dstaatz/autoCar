@@ -13,7 +13,7 @@ import sys
 import logging
 logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
 
-IP = '127.0.0.1'
+IP = '10.132.66.254'
 PORT = 8055
 
 Controller.init()

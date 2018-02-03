@@ -40,7 +40,7 @@ class Server(object):
         '''
             Start the server
         '''
-        logging.info('Server starting up')
+        logging.info('Server starting up at: {0}:{1}'.format(self.ip, self.port))
         self.server = await websockets.serve(self.handle_new_connection, self.ip, self.port, timeout=1)
 
     async def handle_new_connection(self, ws, path):
