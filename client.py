@@ -1,6 +1,8 @@
+''' Client.py
+
+    Send controller info to the server
 '''
-Client.py
-'''
+
 import websockets
 import asyncio
 from contextlib import suppress
@@ -11,10 +13,11 @@ import sys
 import logging
 logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
 
+IP = '127.0.0.1'
+PORT = 8055
+
 Controller.init()
 controller = Controller(0)
-oldRobot = {}
-
 
 async def SendMessage():
     '''
@@ -22,8 +25,8 @@ async def SendMessage():
     '''
     
     logging.debug('pre IP connect')
-    websocket = await websockets.connect('ws://10.132.13.137:8055')
-    logging.info('Sent message')
+    websocket = await websockets.connect('ws://{0}:{1}'.format(IP, PORT))
+    logging.info('Connected to server at: {0}'.format(str(websocket)))
     try:
         while True:
             controller.update()
@@ -75,7 +78,6 @@ async def SendMessage():
             if(robot):
                 print(robot)
                 await websocket.send(pickle.dumps(robot))
-                oldRobot = robot
             with suppress(asyncio.TimeoutError):
                 response = await asyncio.wait_for(websocket.recv(), .1) #the number here is how fast it refreshes
 

@@ -7,7 +7,6 @@ import asyncio
 import pickle
 import logging
 import websockets
-from car import *
 
 p = 1
 
@@ -26,7 +25,7 @@ class Server(object):
         Defines a server object to handle connections
     '''
 
-    def __init__(self, ip, port):
+    def __init__(self, ip, port, robot):
         '''
             Construct a server with an ip on a port
         '''
@@ -35,7 +34,7 @@ class Server(object):
         self.port = port
 
         # setup robot
-        self.robot = Car(reverse_d=True, reverse_s=True)
+        self.robot = robot
 
     async def start_server(self):
         '''
@@ -60,7 +59,7 @@ class Server(object):
         while True:
             if p == 2: # check if connection has been lost
                 # Stop the robot
-                # Need actual code to stop the robot
+                self.stop()
                 quit()
             else:
                 # Wait for a message
@@ -70,8 +69,14 @@ class Server(object):
 
     async def handle_msg(self, msg):
         data = pickle.loads(msg)
-        # logging.info(data)
-        self.robot.update(data)
+        logging.info(data)
+        if self.robot:
+            self.robot.update(data)
+
+    def stop(self):
+        # Stop the robot
+        if self.robot:
+            self.robot.stop()
 
     async def send(self, msg):
         logging.info("Sending a messgage")
@@ -88,7 +93,7 @@ def main():
     
     logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
 
-    server = Server(ip, port)
+    server = Server(ip, port, None)
     asyncio.get_event_loop().run_until_complete(server.start_server())
     asyncio.get_event_loop().run_forever()
 
