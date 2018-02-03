@@ -28,12 +28,6 @@ class Car(object):
             reverse=STEER_MOTOR_REVERSE
         )
 
-        # Setup drive motors
-        self.led = LEDComponent(
-            LED_BUTTON,
-            LED_PIN
-        )
-
     async def produce(self):
         pass
     
@@ -42,8 +36,12 @@ class Car(object):
     
     async def update(self, data):
         
-        # await self.drive_motor.update(data)
-        # await self.steer_motor.update(data)
-        await asyncio.wait_for(self.led.update(data), 2)
+        # Wait for all tasks to be completed
+        await asyncio.wait([
+                self.drive_motor.update(data),
+                self.steer_motor.update(data),
+            ],
+            return_when=asnycio.ALL_COMPLETED
+        )
 
         

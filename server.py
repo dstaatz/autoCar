@@ -75,6 +75,7 @@ class Server(object):
 
     def stop(self):
         # Stop the robot
+        logging.info("Stopping the robot")
         if self.robot:
             self.robot.stop()
 
