@@ -19,7 +19,7 @@ def main():
     '''
     # Setup Logging
     # Debug Mode
-    logging.basicConfig(format='%(asctime)s %(message)s', level=logging.DEBUG)
+    logging.basicConfig(format='%(levelname)s: %(asctime)s: %(message)s', level=logging.INFO)
     # Production Mode
     # logging.basicConfig(filename='log.log', format='%(asctime)s %(message)s', level=logging.INFO)
 
