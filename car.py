@@ -32,7 +32,9 @@ class Car(object):
         pass
     
     def stop(self):
-        pass
+        # Stop the motors
+        self.drive_motor.stop()
+        self.steer_motor.stop()
     
     async def update(self, data):
 

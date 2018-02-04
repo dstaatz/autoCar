@@ -99,8 +99,8 @@ class Server(object):
 
     def stop(self):
         # Stop the robot
-        self.logger.info("Stopping the Robot")
         if self.robot:
+            self.logger.info("Stopping the Robot")
             self.robot.stop()
     
         
