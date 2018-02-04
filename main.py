@@ -23,6 +23,8 @@ def main():
     # Production Mode
     # logging.basicConfig(filename='log.log', format='%(asctime)s %(message)s', level=logging.INFO)
 
+    logger = logging.getLogger(__name__)
+
     # Setup Robot
     car = Car()
     
@@ -33,7 +35,11 @@ def main():
         asyncio.get_event_loop().run_until_complete(server.start_server())
         asyncio.get_event_loop().run_forever()
     except:
-        logger = logging.getLogger(__name__)
+        # Stop the car
+        car.stop()
+        logger.info('Car stopped')
+        
+        # Close the loop
         logger.info('Closing Event loop')
         asyncio.get_event_loop().close()
         logger.info('Event loop closed')

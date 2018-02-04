@@ -6,6 +6,7 @@
 import websockets
 import asyncio
 from contextlib import suppress
+from concurrent.futures import CancelledError
 from xbox import Controller
 import pickle
 import sys
@@ -26,7 +27,6 @@ async def SendMessage():
         Send the state of the controller to the server
     '''
     
-    logger.debug('pre IP connect')
     websocket = await websockets.connect('ws://{0}:{1}'.format(IP, PORT))
     logger.info('Connected to server at: {0}'.format(str(websocket.remote_address)))
 
@@ -87,14 +87,31 @@ async def SendMessage():
             with suppress(asyncio.TimeoutError):
                 response = await asyncio.wait_for(websocket.recv(), .1) #the number here is how fast it refreshes
     
+    except CancelledError:
+        pass
     except websockets.ConnectionClosed:
+        logger.info('Server closed connection')
+    finally:
         # Close the connection
         await websocket.close()
-        logger.info('Connection closed: {}'.format(websocket.remote_address))
+        logger.info('Connection closed to: {}'.format(websocket.remote_address))
 
 
 def main():
-    asyncio.get_event_loop().run_until_complete(SendMessage())
+    loop = asyncio.get_event_loop()
+    try:
+        current_task = asyncio.ensure_future(SendMessage())
+        loop.run_until_complete(current_task)
+    except KeyboardInterrupt:
+        logger.info('Keyboard Interrupt. Closing Connection...')
+        
+        # Cancel tasks
+        current_task.cancel() # Set task to be cancelled
+        loop.run_forever() # This line actually cancels the task
+
+    finally:
+        loop.close()
+    
 
 
 if __name__ == '__main__':
