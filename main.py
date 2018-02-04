@@ -23,7 +23,11 @@ def main():
     # Production Mode
     # logging.basicConfig(filename='log.log', format='%(asctime)s %(message)s', level=logging.INFO)
 
+    # Get our logger
     logger = logging.getLogger(__name__)
+
+    # Get event loop to work with
+    loop = asyncio.get_event_loop()
 
     # Setup Robot
     car = Car()
@@ -32,16 +36,26 @@ def main():
     server = Server(SERVER_IP, SERVER_PORT, car)
 
     try:
-        asyncio.get_event_loop().run_until_complete(server.start_server())
-        asyncio.get_event_loop().run_forever()
-    except:
+        loop.run_until_complete(server.start_server())
+        loop.run_forever()
+    except Exception as e:
+        logger.error(str(e))
+
         # Stop the car
+        logger.info('Stopping Car')
         car.stop()
         logger.info('Car stopped')
+
+        # Cancel all tasks
+        for task in asyncio.Task.all_tasks():
+            task.cancel()
         
+        loop.run_forever()
+
+    finally:
         # Close the loop
         logger.info('Closing Event loop')
-        asyncio.get_event_loop().close()
+        loop.close()
         logger.info('Event loop closed')
 
 
