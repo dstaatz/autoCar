@@ -68,7 +68,8 @@ class Server(object):
             self.logger.info('Robot stopped')
 
             # Close Connection
-            await ws.close()
+            if ws.open:
+                await ws.close()
             self.logger.info('Connection closed: {}'.format(ws.remote_address))
             
             # Remove connection
@@ -94,6 +95,10 @@ class Server(object):
             self.logger.info('Send failed')
             self._active_connections = set()
             asyncio.get_event_loop().close()
+
+    def shutdown(self):
+        self.server.close()
+        asyncio.ensure_future(self.server.wait_closed())
 
     def stop(self):
         # Stop the robot

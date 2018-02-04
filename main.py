@@ -47,13 +47,8 @@ def main():
         car.stop()
         logger.info('Car stopped')
 
-        # Set all tasks to be cancelled
-        for task in asyncio.Task.all_tasks():
-            task.cancel()
-        
-        # Run the event loop to trigger all the cancelled task
-        loop.run_forever()
-        logger.info('All task cancelled')
+        # Shutdown the server
+        server.shutdown()
 
         # Close the loop
         loop.close()
