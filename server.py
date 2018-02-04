@@ -65,7 +65,6 @@ class Server(object):
             self.logger.info(e)
         finally:
             # Stop robot
-            # # (I don't think this is nessasary but it's better to be safe then sorry)
             self.stop()
             self.logger.info('Robot stopped')
 

@@ -18,6 +18,8 @@ logger = logging.getLogger(__name__)
 IP = '10.132.66.254'
 PORT = 8055
 
+DELAY_TIME = 1
+
 # Initalize controller number 0
 Controller.init()
 controller = Controller(0)
@@ -27,7 +29,16 @@ async def SendMessage():
         Send the state of the controller to the server
     '''
     
-    websocket = await websockets.connect('ws://{0}:{1}'.format(IP, PORT))
+    while True:
+        try:
+            websocket = await websockets.connect('ws://{0}:{1}'.format(IP, PORT))
+        except ConnectionRefusedError:
+            logger.warn('Connection Refused at {0}:{1}, trying again'.format(IP, PORT))
+            await asyncio.sleep(DELAY_TIME)
+        else:
+            break
+        
+    
     logger.info('Connected to server at: {0}'.format(str(websocket.remote_address)))
 
     # Create the dictionary to send
