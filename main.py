@@ -40,7 +40,9 @@ def main():
         loop.run_forever()
     except Exception as e:
         logger.error(str(e))
-
+    except KeyboardInterrupt:
+        logger.info('Keyboard Interrupt. Closing Connection...')
+    finally:
         # Stop the car
         logger.info('Stopping Car')
         car.stop()
@@ -52,7 +54,6 @@ def main():
         
         loop.run_forever()
 
-    finally:
         # Close the loop
         logger.info('Closing Event loop')
         loop.close()
