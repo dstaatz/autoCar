@@ -62,15 +62,19 @@ class Server(object):
                 # Wait for a message
                 result = await ws.recv()
             except websockets.ConnectionClosed:
-                # Remove connection if closed
+                # Stop robot
                 self.stop()
+
+                # Close Connection
+                await ws.close()
+                self.logger.info('Connection closed: {}'.format(ws.remote_address))
+                
+                # Remove connection
                 self._active_connections.remove(ws)
                 self.logger.info('Connection removed: {}'.format(ws.remote_address))
             else:
                 # Handle the recieved message
                 await self.handle_msg(result)
-
-        
 
     async def handle_msg(self, msg):
         # Load from pickle
@@ -82,12 +86,6 @@ class Server(object):
         if self.robot:
             await self.robot.update(data)
 
-    def stop(self):
-        # Stop the robot
-        self.logger.info("Stopping the Robot")
-        if self.robot:
-            self.robot.stop()
-
     async def send(self, msg):
         try:
             self.logger.debug("Sending: {}".format(msg))
@@ -97,6 +95,13 @@ class Server(object):
             self.logger.info('Send failed')
             self._active_connections = set()
             asyncio.get_event_loop().close()
+
+    def stop(self):
+        # Stop the robot
+        self.logger.info("Stopping the Robot")
+        if self.robot:
+            self.robot.stop()
+    
         
 def test():
     ip = '127.0.0.1'
