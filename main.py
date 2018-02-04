@@ -31,9 +31,10 @@ def main():
         asyncio.get_event_loop().run_until_complete(server.start_server())
         asyncio.get_event_loop().run_forever()
     except:
+        logger = logging.getLogger(__name__)
+        logger.debug('Closing Event loop')
         asyncio.get_event_loop().close()
-        logging.info("Closing")
-        quit()
+        logger.info('Event loop closed')
 
 
 if __name__ == '__main__':
