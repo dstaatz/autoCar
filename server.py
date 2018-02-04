@@ -4,6 +4,7 @@ Server
 This is the server to be ran on the pi
 '''
 import asyncio
+from concurrent.futures import CancelledError
 import pickle
 import logging
 import websockets
@@ -61,6 +62,13 @@ class Server(object):
                 # Wait for a message
                 result = await ws.recv()
             except websockets.ConnectionClosed:
+                pass
+            except CancelledError:
+                pass
+            else:
+                # Handle the recieved message
+                await self.handle_msg(result)
+            finally:
                 # Stop robot
                 self.stop()
 
@@ -73,9 +81,6 @@ class Server(object):
                 self.logger.info('Connection removed: {}'.format(ws.remote_address))
 
                 connection_alive = False
-            else:
-                # Handle the recieved message
-                await self.handle_msg(result)
 
     async def handle_msg(self, msg):
         # Load from pickle
