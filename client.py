@@ -82,13 +82,15 @@ async def SendMessage():
 
             # Send the robot state
             if(robot):
-                logger.info('Sending: {}'.format(robot))
+                logger.debug('Sending: {}'.format(robot))
                 await websocket.send(pickle.dumps(robot))
             with suppress(asyncio.TimeoutError):
                 response = await asyncio.wait_for(websocket.recv(), .1) #the number here is how fast it refreshes
-
-    finally:
+    
+    except websockets.ConnectionClosed:
+        # Close the connection
         await websocket.close()
+        logger.info('Connection closed: {}'.format(websocket.remote_address))
 
 
 def main():

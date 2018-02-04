@@ -32,7 +32,7 @@ def main():
         asyncio.get_event_loop().run_forever()
     except:
         logger = logging.getLogger(__name__)
-        logger.debug('Closing Event loop')
+        logger.info('Closing Event loop')
         asyncio.get_event_loop().close()
         logger.info('Event loop closed')
 

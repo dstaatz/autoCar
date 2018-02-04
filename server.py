@@ -50,7 +50,7 @@ class Server(object):
         '''
         global p
 
-        self.logger.info('New connection to server')
+        self.logger.info('New connection to server at: {}'.format(ws.remote_address))
         self._active_connections.add(ws)
         
         # Test the new connection
@@ -58,20 +58,19 @@ class Server(object):
 
         # Run forever until connection is lost
         while True:
-            if p == 2: # check if connection has been lost
-                # Stop the robot
-                self.stop()
-                break
-            else:
+            try:
                 # Wait for a message
                 result = await ws.recv()
-            
-            # Handle the recieved message
-            await self.handle_msg(result)
+            except websockets.ConnectionClosed:
+                # Remove connection if closed
+                self.stop()
+                self._active_connections.remove(ws)
+                self.logger.info('Connection removed: {}'.format(ws.remote_address))
+            else:
+                # Handle the recieved message
+                await self.handle_msg(result)
 
-        # Remove connection if broken out of while loop
-        self.logger.info('Connection removed: {}'.format(ws.remote_address))
-        self._active_connections.remove(ws)
+        
 
     async def handle_msg(self, msg):
         # Load from pickle
