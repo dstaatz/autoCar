@@ -96,9 +96,9 @@ class Server(object):
             self._active_connections = set()
             asyncio.get_event_loop().close()
 
-    def shutdown(self):
+    async def shutdown(self):
         self.server.close()
-        asyncio.ensure_future(self.server.wait_closed())
+        await self.server.wait_closed()
 
     def stop(self):
         # Stop the robot

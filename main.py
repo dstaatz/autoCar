@@ -47,13 +47,15 @@ def main():
         car.stop()
         logger.info('Car stopped')
 
+        loop.stop()
+
         # Shutdown the server
-        server.shutdown()
+        task = asyncio.ensure_future(server.shutdown())
+        loop.run_until_complete(task)
 
         # Close the loop
         loop.close()
         logger.info('Event loop closed')
-
 
 if __name__ == '__main__':
     main()
