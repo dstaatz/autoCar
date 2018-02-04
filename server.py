@@ -53,11 +53,10 @@ class Server(object):
         self.logger.info('New connection to server at: {}'.format(ws.remote_address))
         self._active_connections.add(ws)
         
-        # Test the new connection
-        # _thread.start_new(self.test_connection, ())
+        connection_alive = True
 
         # Run forever until connection is lost
-        while True:
+        while connection_alive:
             try:
                 # Wait for a message
                 result = await ws.recv()
@@ -72,6 +71,8 @@ class Server(object):
                 # Remove connection
                 self._active_connections.remove(ws)
                 self.logger.info('Connection removed: {}'.format(ws.remote_address))
+
+                connection_alive = False
             else:
                 # Handle the recieved message
                 await self.handle_msg(result)
