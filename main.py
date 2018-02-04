@@ -25,11 +25,13 @@ def main():
 
     # Setup Robot
     car = Car()
+    
+    # Setup Server
+    server = Server(SERVER_IP, SERVER_PORT, car)
 
     try:
-        server = Server(SERVER_IP, SERVER_PORT, car)
         asyncio.get_event_loop().run_until_complete(server.start_server())
-        asyncio.get_event_loop().run_forever()
+        # asyncio.get_event_loop().run_forever()
     except:
         logger = logging.getLogger(__name__)
         logger.info('Closing Event loop')
