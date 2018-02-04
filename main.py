@@ -47,7 +47,7 @@ def main():
         car.stop()
         logger.info('Car stopped')
 
-        loop.stop()
+        # loop.stop()
 
         # Shutdown the server
         task = asyncio.ensure_future(server.shutdown())
