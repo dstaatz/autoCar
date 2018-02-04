@@ -61,6 +61,8 @@ class Server(object):
 
                 # Handle the recieved message
                 await self.handle_msg(result)
+        except Exception as e:
+            self.logger.info(e)
         finally:
             # Stop robot
             # # (I don't think this is nessasary but it's better to be safe then sorry)
