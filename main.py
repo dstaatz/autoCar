@@ -38,24 +38,24 @@ def main():
     try:
         loop.run_until_complete(server.start_server())
         loop.run_forever()
-    except Exception as e:
-        logger.error(str(e))
+
     except KeyboardInterrupt:
         logger.info('Keyboard Interrupt. Closing Connection...')
+    
     finally:
         # Stop the car
-        logger.info('Stopping Car')
         car.stop()
         logger.info('Car stopped')
 
-        # Cancel all tasks
+        # Set all tasks to be cancelled
         for task in asyncio.Task.all_tasks():
             task.cancel()
         
+        # Run the event loop to trigger all the cancelled task
         loop.run_forever()
+        logger.info('All task cancelled')
 
         # Close the loop
-        logger.info('Closing Event loop')
         loop.close()
         logger.info('Event loop closed')
 

@@ -49,38 +49,31 @@ class Server(object):
         '''
             Handle a new incoming connection to the server
         '''
-        global p
 
         self.logger.info('New connection to server at: {}'.format(ws.remote_address))
         self._active_connections.add(ws)
-        
-        connection_alive = True
 
         # Run forever until connection is lost
-        while connection_alive:
-            try:
+        try:
+            while True:
                 # Wait for a message
                 result = await ws.recv()
-            except websockets.ConnectionClosed:
-                pass
-            except CancelledError:
-                pass
-            else:
+
                 # Handle the recieved message
                 await self.handle_msg(result)
-            finally:
-                # Stop robot
-                self.stop()
+        finally:
+            # Stop robot
+            # # (I don't think this is nessasary but it's better to be safe then sorry)
+            self.stop()
+            self.logger.info('Robot stopped')
 
-                # Close Connection
-                await ws.close()
-                self.logger.info('Connection closed: {}'.format(ws.remote_address))
-                
-                # Remove connection
-                self._active_connections.remove(ws)
-                self.logger.info('Connection removed: {}'.format(ws.remote_address))
-
-                connection_alive = False
+            # Close Connection
+            await ws.close()
+            self.logger.info('Connection closed: {}'.format(ws.remote_address))
+            
+            # Remove connection
+            self._active_connections.remove(ws)
+            self.logger.info('Connection removed: {}'.format(ws.remote_address))
 
     async def handle_msg(self, msg):
         # Load from pickle
