@@ -65,7 +65,7 @@ class SensorComponent(Component):
         self.channel = channel
     
     async def produce(self):
-        pass
+        raise NotImplementedError()
 
 
 class MotorComponent(Component):
@@ -87,7 +87,7 @@ class MotorComponent(Component):
         io.output(self.p2, False)
 
     def update(self, data):
-        pass
+        raise NotImplementedError()
 
 
 class DCMotorComponent(MotorComponent):
@@ -118,6 +118,6 @@ class PWMMotorComponent(MotorComponent):
         io.setup(pwm_pin, io.OUT)
     
     def update(self, data):
-        pass
+        raise NotImplementedError()
     
     
