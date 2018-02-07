@@ -34,8 +34,7 @@ class Server(object):
         self.ip = ip
         self.port = port
         self.logger = logging.getLogger(__name__)
-
-        # setup robot
+        self.server = None
         self.robot = robot
 
     async def start_server(self):
@@ -50,19 +49,22 @@ class Server(object):
             Handle a new incoming connection to the server
         '''
 
-        self.logger.info('New connection to server at: {}'.format(ws.remote_address))
+        # Note the new connection
+        self.logger.info('New connection to server at: {0}'.format(ws.remote_address))
+        
+        # Add the connection to the set
         self._active_connections.add(ws)
 
-        # Run forever until connection is lost
+        # Run forever until connection is lost or exception raised
         try:
             while True:
+                if not ws.open:
+                    break
                 # Wait for a message
                 result = await ws.recv()
 
                 # Handle the recieved message
                 await self.handle_msg(result)
-        except Exception as e:
-            self.logger.info(e)
         finally:
             # Stop robot
             self.stop()
@@ -94,29 +96,58 @@ class Server(object):
                 asyncio.ensure_future(ws.send(msg))
         except:
             self.logger.info('Send failed')
-            self._active_connections = set()
-            asyncio.get_event_loop().close()
+            # self._active_connections = set()
+            # asyncio.get_event_loop().close()
 
     async def shutdown(self):
-        self.server.close()
-        await self.server.wait_closed()
+        '''
+            Shutdown the server if it exsits
+        '''
+
+        if self.server:
+            self.server.close()
+            await self.server.wait_closed()
 
     def stop(self):
+        '''
+            Stop the robot if it exsits
+        '''
+
         # Stop the robot
         if self.robot:
             self.logger.info("Stopping the Robot")
             self.robot.stop()
     
         
-def test():
-    ip = '127.0.0.1'
+def test_server():
+    '''
+        Sets up a test server with robot set to none on localhost for testing
+    '''
+    
+    ip = '127.0.0.1' # localhost
     port = 8055
     
-    logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
+    # Setup logging
+    logging.basicConfig(format='%(asctime)s %(message)s', level=logging.DEBUG)
 
+    # Create server object
     server = Server(ip, port, None)
-    asyncio.get_event_loop().run_until_complete(server.start_server())
-    asyncio.get_event_loop().run_forever()
+    
+    try:
+        loop.run_until_complete(server.start_server())
+        loop.run_forever()
+
+    except KeyboardInterrupt:
+        logger.info('Keyboard Interrupt. Closing Connections...')
+    
+    finally:
+        # Shutdown the server
+        task = asyncio.ensure_future(server.shutdown())
+        loop.run_until_complete(task)
+
+        # Close the loop
+        loop.close()
+        logger.info('Event loop closed')
 
 if __name__ == '__main__':
-    test()
+    test_server()

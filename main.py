@@ -20,13 +20,13 @@ def main():
     # Setup Logging
     # Debug Mode
     logging.basicConfig(format='%(levelname)s: %(asctime)s: %(message)s', level=logging.INFO)
-    # Production Mode
+    # Log to File Mode
     # logging.basicConfig(filename='log.log', format='%(asctime)s %(message)s', level=logging.INFO)
 
     # Get our logger
     logger = logging.getLogger(__name__)
 
-    # Get event loop to work with
+    # Get the event loop to work with
     loop = asyncio.get_event_loop()
 
     # Setup Robot
@@ -40,14 +40,12 @@ def main():
         loop.run_forever()
 
     except KeyboardInterrupt:
-        logger.info('Keyboard Interrupt. Closing Connection...')
+        logger.info('Keyboard Interrupt. Closing Connections...')
     
     finally:
         # Stop the car
         car.stop()
         logger.info('Car stopped')
-
-        # loop.stop()
 
         # Shutdown the server
         task = asyncio.ensure_future(server.shutdown())
