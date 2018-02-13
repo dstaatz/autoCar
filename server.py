@@ -9,7 +9,6 @@ import pickle
 import logging
 import websockets
 
-p = 1
 
 class TextColors:
     '''
