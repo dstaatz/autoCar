@@ -1,5 +1,5 @@
 '''
-Robot.py
+main.py
 
 This is the main controller file
 
@@ -36,6 +36,7 @@ def main():
     server = Server(SERVER_IP, SERVER_PORT, car)
 
     try:
+        # Main event loop
         loop.run_until_complete(server.start_server())
         loop.run_forever()
 

@@ -9,9 +9,9 @@ from contextlib import suppress
 from concurrent.futures import CancelledError
 from xbox import Controller
 import pickle
-import sys
 
 import logging
+
 logging.basicConfig(format='%(levelname)s: %(asctime)s: %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -36,8 +36,7 @@ async def SendMessage():
             logger.warn('Connection Refused at {0}:{1}, trying again'.format(IP, PORT))
             await asyncio.sleep(DELAY_TIME)
         else:
-            break
-        
+            break 
     
     logger.info('Connected to server at: {0}'.format(str(websocket.remote_address)))
 
@@ -107,7 +106,6 @@ async def SendMessage():
         await websocket.close()
         logger.info('Connection closed to: {}'.format(websocket.remote_address))
 
-
 def main():
     loop = asyncio.get_event_loop()
     try:
@@ -122,8 +120,6 @@ def main():
 
     finally:
         loop.close()
-    
-
 
 if __name__ == '__main__':
     main()
